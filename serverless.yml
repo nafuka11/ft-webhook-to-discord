@@ -1,0 +1,40 @@
+service: ft-webhook-to-discord
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+
+  # you can overwrite defaults here
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ap-northeast-1
+
+  # you can define service wide environment variables here
+  environment:
+    DISCORD_BOT_TOKEN: ${ssm:/ft-webhook-to-discord/${self:provider.stage}/DISCORD_BOT_TOKEN~true}
+    DISCORD_CHANNEL_ID: ${ssm:/ft-webhook-to-discord/${self:provider.stage}/DISCORD_CHANNEL_ID~true}
+
+package:
+  exclude:
+    - "*"
+    - "*/**"
+  include:
+    - src/**/*.py
+
+functions:
+  event:
+    handler: src.handler.send_event
+    events:
+      - httpApi:
+          path: /event
+          method: post
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: false
+  defaultStage: dev
