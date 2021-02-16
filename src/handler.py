@@ -1,4 +1,5 @@
 import json
+import traceback
 from src import message
 
 
@@ -16,5 +17,8 @@ def send_event(event: dict, context: dict) -> dict:
     body = {"message": "ok"}
     response = {"statusCode": 200, "body": json.dumps(body)}
     print(event)
-    message.send_discord(json.loads(event["body"]))
+    try:
+        message.send_discord(json.loads(event["body"]))
+    except Exception as e:
+        traceback.print_exc()
     return response

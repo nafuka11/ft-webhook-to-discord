@@ -1,6 +1,7 @@
 import discord
 import os
 from datetime import datetime, timezone, timedelta
+import traceback
 
 
 def send_discord(body: dict) -> None:
@@ -14,9 +15,12 @@ def send_discord(body: dict) -> None:
 
     @client.event
     async def on_ready():
-        embed = create_event_embed(body)
-        channel = client.get_channel(int(os.getenv("DISCORD_CHANNEL_ID")))
-        await channel.send(embed=embed)
+        try:
+            embed = create_event_embed(body)
+            channel = client.get_channel(int(os.getenv("DISCORD_CHANNEL_ID")))
+            await channel.send(embed=embed)
+        except Exception as e:
+            traceback.print_exc()
         await client.close()
 
     client.run(os.getenv("DISCORD_BOT_TOKEN"))
