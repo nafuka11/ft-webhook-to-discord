@@ -77,6 +77,7 @@ def _get_local_timestr(timestr: str) -> str:
 
 def _from_iso8601_str(time_str: str) -> datetime:
     """ISO 8601形式の日付文字列からdatetimeを返す
+    Webhookでは YYYY-MM-DD hh:mm:ss UTC 形式
 
     Args:
         time_str (str): ISO 8601形式の日付文字列
@@ -86,5 +87,6 @@ def _from_iso8601_str(time_str: str) -> datetime:
 
     """
     time_str = time_str.replace("Z", "+00:00")
+    time_str = time_str.replace("UTC", "+00:00")
     d = datetime.fromisoformat(time_str)
     return d
