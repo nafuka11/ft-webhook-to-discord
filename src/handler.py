@@ -18,7 +18,9 @@ def send_event(event: dict, context: dict) -> dict:
     response = {"statusCode": 200, "body": json.dumps(body)}
     print(event)
     try:
-        message.send_discord(json.loads(event["body"]))
+        req_body = json.loads(event["body"])
+        if message.can_send_discord(req_body):
+            message.send_discord(req_body)
     except Exception as e:
         traceback.print_exc()
     return response

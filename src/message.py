@@ -4,6 +4,27 @@ from datetime import datetime, timezone, timedelta
 import traceback
 
 
+CAMPUS_ID = 26
+CURSUS_ID = 21
+
+
+def can_send_discord(body: dict) -> bool:
+    """Event情報からDiscordに送信できるかどうかを返す
+
+    Args:
+        body (dict): event情報
+
+    Returns:
+        bool: Discordに送信できるかどうか
+
+    """
+    if CAMPUS_ID not in body["campus_ids"]:
+        return False
+    if CURSUS_ID not in body["cursus_ids"]:
+        return False
+    return True
+
+
 def send_discord(body: dict) -> None:
     """Discordにevent情報を送信する
 

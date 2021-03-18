@@ -9,9 +9,14 @@ name = "pypi"
 [dev-packages]
 black = "*"
 flake8 = "*"
+pytest = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
+
+[scripts]
+test = "python -m pytest"
