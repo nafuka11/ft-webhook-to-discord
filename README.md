@@ -3,6 +3,7 @@
 42のWebhookから得た情報をDiscordのチャンネルに通知する API Gateway + Lambdaです。
 
 ## 必要物
+
 - Serverless Framework >= v2.23.0
 - AWS CLI
 
@@ -43,6 +44,20 @@
     ```
 
 ## デプロイ
+
 ```bash
-sls deploy
+sls deploy --stage dev
+sls deploy --stage prod
+```
+
+## 動作確認
+
+ローカル
+```bash
+pipenv shell
+sls invoke local -f event -p events/data.json
+```
+dev環境
+```bash
+sls invoke -f event -s dev -p events/data.json
 ```
