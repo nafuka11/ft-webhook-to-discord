@@ -1,10 +1,11 @@
 service: ft-webhook-to-discord
+variablesResolutionMode: 20210326
 
-frameworkVersion: '2'
+frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: python3.8
+  runtime: python3.11
   lambdaHashingVersion: 20201221
 
   # you can overwrite defaults here
@@ -13,8 +14,8 @@ provider:
 
   # you can define service wide environment variables here
   environment:
-    DISCORD_BOT_TOKEN: ${ssm:/ft-webhook-to-discord/${self:provider.stage}/DISCORD_BOT_TOKEN~true}
-    DISCORD_CHANNEL_ID: ${ssm:/ft-webhook-to-discord/${self:provider.stage}/DISCORD_CHANNEL_ID~true}
+    DISCORD_BOT_TOKEN: ${ssm:/ft-webhook-to-discord/${self:provider.stage}/DISCORD_BOT_TOKEN}
+    DISCORD_CHANNEL_ID: ${ssm:/ft-webhook-to-discord/${self:provider.stage}/DISCORD_CHANNEL_ID}
 
 package:
   exclude:
@@ -32,6 +33,7 @@ functions:
           method: post
 
 plugins:
+  - serverless-better-credentials
   - serverless-python-requirements
 
 custom:

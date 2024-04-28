@@ -32,7 +32,8 @@ def send_discord(body: dict) -> None:
         body (dict): event情報
 
     """
-    client = discord.Client()
+    intents = discord.Intents.default()
+    client = discord.Client(intents=intents)
 
     @client.event
     async def on_ready():
