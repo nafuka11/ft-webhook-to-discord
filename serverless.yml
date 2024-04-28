@@ -33,6 +33,7 @@ functions:
           method: post
 
 plugins:
+  - serverless-better-credentials
   - serverless-python-requirements
 
 custom:
