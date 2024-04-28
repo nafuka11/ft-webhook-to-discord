@@ -1,6 +1,7 @@
 service: ft-webhook-to-discord
+variablesResolutionMode: 20210326
 
-frameworkVersion: '2'
+frameworkVersion: '3'
 
 provider:
   name: aws
